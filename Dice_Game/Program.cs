@@ -2,6 +2,11 @@
 {
     internal class Program
     {
+        static int RollDie(int numFaces)
+        {
+            Random rnd = new Random();
+            return rnd.Next(1, numFaces + 1);
+        }
         static void Main(string[] args)
         {
             // Instantiate a random object
@@ -12,12 +17,14 @@
             int playerScore;
             int computerScore;
 
+            int numFaces = 6; // Number of faces of the dice
+
             ConsoleKeyInfo keyPress;
             do
             {
                 // Roll the dice for the player
-                roll1 = rnd.Next(1, 7);
-                roll2 = rnd.Next(1, 7);
+                roll1 = RollDie(numFaces);
+                roll2 = RollDie(numFaces);
                 playerScore = roll1 + roll2;
 
                 Console.WriteLine("Your Roll");
@@ -31,8 +38,8 @@
                 Console.WriteLine();
 
                 // Roll the dice for the computer
-                roll1 = rnd.Next(1, 7);
-                roll2 = rnd.Next(1, 7);
+                roll1 = RollDie(numFaces);
+                roll2 = RollDie(numFaces);
                 computerScore = roll1 + roll2;
 
                 Console.WriteLine("Computer's Roll");
