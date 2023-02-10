@@ -2,35 +2,65 @@
 {
     internal class Program
     {
-        static int RollDie(int numFaces)
+        static string Truncate(string text, int numCharsToBeTruncated)
         {
+            return text.Substring(0, text.Length - numCharsToBeTruncated);
+        }
+
+        static int[] RollDie(int numFaces, int numDice)
+        {
+            // Instantiate stuff
             Random rnd = new Random();
-            return rnd.Next(1, numFaces + 1);
+            int[] funcOutput = new int[numDice];
+
+            // Roll as many dice as the user wants
+            for (int i = 0; i < numDice; i++)
+            {
+                funcOutput[i] = rnd.Next(1, numFaces + 1);
+            }
+
+            return funcOutput;
+        }
+
+        static void PrintResults(int[] rolls, string player)
+        {
+            // player may not be what you think it is... this comment is high quality
+            string str = " rolled a ";
+
+            // Handles arbitrarily many dice
+            foreach (int roll in rolls)
+            {
+                str += $"{roll} and a ";
+            }
+
+            // Truncate the final "and a "
+            str = Truncate(str, 7);
+
+            Console.WriteLine(player + str);
+            Console.WriteLine($"Total is {rolls.Sum()}");
+            Console.WriteLine();
         }
         static void Main(string[] args)
         {
+            int numFaces = 6; // Number of faces of the dice
+            int numDice = 5; // Number of dice
             // Instantiate a random object
             Random rnd = new Random();
+            int[] rolls = new int[numDice];
+            rolls = RollDie(numFaces, numDice);
 
-            int roll1;
-            int roll2;
             int playerScore;
             int computerScore;
 
-            int numFaces = 6; // Number of faces of the dice
-
+            // Store keypresses
             ConsoleKeyInfo keyPress;
             do
             {
                 // Roll the dice for the player
-                roll1 = RollDie(numFaces);
-                roll2 = RollDie(numFaces);
-                playerScore = roll1 + roll2;
+                playerScore = rolls.Sum();
 
                 Console.WriteLine("Your Roll");
-                Console.WriteLine($"You rolled a {roll1} and a {roll2}");
-                Console.WriteLine($"Total is {playerScore}");
-                Console.WriteLine();
+                PrintResults(rolls, "You");
 
                 // Pause to give the illusion of a game
                 Console.WriteLine("Press any key...");
@@ -38,14 +68,11 @@
                 Console.WriteLine();
 
                 // Roll the dice for the computer
-                roll1 = RollDie(numFaces);
-                roll2 = RollDie(numFaces);
-                computerScore = roll1 + roll2;
+                rolls = RollDie(numFaces, numDice);
+                computerScore = rolls.Sum();
 
                 Console.WriteLine("Computer's Roll");
-                Console.WriteLine($"Computer rolled a {roll1} and a {roll2}");
-                Console.WriteLine($"Total is {computerScore}");
-                Console.WriteLine();
+                PrintResults(rolls, "Computer");
 
                 // Find out who won
                 if (playerScore > computerScore)
