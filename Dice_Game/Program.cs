@@ -24,7 +24,7 @@
 
         static void PrintResults(int[] rolls, string player)
         {
-            // player may not be what you think it is... this comment is high quality
+            // Allow the print function to work when n dice are rolled
             string str = " rolled a ";
 
             // Handles arbitrarily many dice
@@ -42,8 +42,8 @@
         }
         static void Main(string[] args)
         {
-            int numFaces = 6; // Number of faces of the dice
-            int numDice = 5; // Number of dice
+            const int numFaces = 6; // Number of faces of the dice
+            const int numDice = 2; // Number of dice
             // Instantiate a random object
             Random rnd = new Random();
             int[] rolls = new int[numDice];
